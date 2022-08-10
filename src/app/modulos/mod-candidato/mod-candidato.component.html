@@ -1,0 +1,1027 @@
+<!-- Nav tabs -->
+<div class="container">
+
+    <div class="form-inline bg-light shadow p-2 pl-4 mb-3 mt-3 bg-white rounded ">
+        <label class="sr-only" for="inlineFormInputName2">Tipo Candidato</label>
+        
+        <select name="nmtipo_candidato" id="cboi_tipo_candidato" [ngClass]="FormValida.ftipo_candidato == true ? 'form-control border border-danger mb-2 mt-2  mr-sm-2' : 'form-control mb-2 mt-2  mr-sm-2'" [(ngModel)]="CBOtipo_candidato" (change)="SelectTipoCandidato(this)" >
+            <option value="">Seleccionar Tipo Candidato</option>
+            <option value="1">Personal Táctico y Soporte</option>
+            <option value="2">Personal Operativo </option>            
+        </select>  
+      
+    </div>
+
+  <ul class="nav nav-tabs bg-info" id="myTab">
+    <li class="nav-item">
+      <a class="nav-link text-white  active" data-toggle="tab" href="#basico">Datos Básicos</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-white" data-toggle="tab" href="#adicionales">Datos Adicionales</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-white" data-toggle="tab" href="#files">Files</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-white" data-toggle="tab" href="#estudios">Estudios</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-white" data-toggle="tab" href="#referencia">Referencias</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-white" data-toggle="tab" href="#cargos">Cargos</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-white" data-toggle="tab" href="#infofamiliar">Información Familiar</a>
+    </li>
+  </ul>
+
+
+    <div class="row">
+        <div  class="col-md-12 text-right mt-3 mb-3 mr-3">
+            <button type="button"  class="btn btn-info" (click)="GuardarInformacionCandidato()"> Guardar datos</button> &nbsp;
+            <button type="button"  class="btn btn-danger" (click)="BorrarTodoFormulario()"> Cancelar</button>
+            
+        </div>
+    </div>
+</div>
+
+  <div class="tab-content">
+    <div class="tab-pane container active" id="basico">
+        <div class="container">
+            
+                <div class="row">
+                    <div  class="col-xl-6 col-md-12 col-sm-12">
+                        <div class="form-group  mx-sm-2">
+                            <label for="inputIdentificacion" class="sr-only">Identificación</label>
+                            <input type="text" [ngClass]="FormValida.identificacion == true ? 'form-control border border-danger' : 'form-control'" id="inputIdentificacion" [(ngModel)]="txtidentificacion" placeholder="Identificación">
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-md-12 col-sm-12  ">
+                        <div class="form-group  mx-sm-2">
+                            <label for="inputPass" class="sr-only">Pais</label>
+                            <select name="" id="" [ngClass]="FormValida.pais == true ? 'form-control border border-danger' : 'form-control'" [(ngModel)]="cbopais" (change)="ListarDepartamento($event)">
+                                <option value="">Seleccionar País</option>                                
+                                <option value="{{listPais.id}}" *ngFor="let listPais of listPaises; let j=index" >{{listPais.descripcion}}</option>                                
+                            </select>                            
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div  class="col-xl-6 col-md-12 col-sm-12">
+                        <div class="form-group  mx-sm-2">
+                            <label for="inputTipo" class="sr-only">Tipo Documento</label>
+
+                            <div class="input-group mb-2 mr-sm-2">
+                                <select name="" id="" [ngClass]="FormValida.tipo == true ? 'form-control border border-danger' : 'form-control'" [(ngModel)]="cboTipo">
+                                    <option value="" selected>Seleccionar Tipo Documento</option>                                
+                                    <option value="{{listTipoDoc.id}}" *ngFor="let listTipoDoc of listTipoDocumento; let j=index" >{{listTipoDoc.descripcion}}</option>                                
+                                </select> 
+                                <div class="input-group-prepend">
+                                  <div class="input-group-text"><a href="javascript:void(0)" (click)="openTipoDoc(mymodalTipodoc)">más</a> </div>
+                                </div>                                
+                            </div>
+
+                               
+                            
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-md-12 col-sm-12  ">
+                        <div class="form-group  mx-sm-2">
+                            <label for="inputPass" class="sr-only">Departamento</label>
+                            <select name="" id="" [ngClass]="FormValida.departamento == true ? 'form-control border border-danger' : 'form-control'" [(ngModel)]="cboDpto" (change)="ListarCiudad($event)">
+                                <option value="">Seleccionar Depto</option>
+                                <option value="{{listDepto.id}}" *ngFor="let listDepto of listDeptos; let j=index" >{{listDepto.descripcion}}</option>                                
+                            </select>                            
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div  class="col-xl-6 col-md-12 col-sm-12">
+                        <div class="form-group  mx-sm-2">
+                            <label for="inputDBNombre" class="sr-only">Nombre</label>
+                            <input type="text" [ngClass]="FormValida.nombre == true ? 'form-control border border-danger' : 'form-control'" id="inputDBNombre" [(ngModel)]="txtnombre" placeholder="Nombre">
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-md-12 col-sm-12  ">
+                        <div class="form-group  mx-sm-2">
+                            <label for="inputPass" class="sr-only">Ciudad</label>
+                            <select name="" id="" [ngClass]="FormValida.ciudad == true ? 'form-control border border-danger' : 'form-control'" [(ngModel)]="cbociudad">
+                                <option value="">Seleccionar Ciudad</option>
+                                <option value="{{listCiudad.id}}" *ngFor="let listCiudad of listCiudades; let j=index" >{{listCiudad.descripcion}}</option>
+                            </select>                            
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div  class="col-xl-6 col-md-12 col-sm-12">
+                        <div class="form-group  mx-sm-2">
+                            <label for="inputDBApellido" class="sr-only">Apellido</label>
+                            <input type="text" [ngClass]="FormValida.apellido == true ? 'form-control border border-danger' : 'form-control'" id="inputDBApellido" [(ngModel)]="txtapellido" placeholder="Apellido">
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-md-12 col-sm-12  ">
+                        <div class="form-group  mx-sm-2">
+                            <!-- <label for="inputPass" class="sr-only">Entidad</label>
+                            <select name="nmSLEntidad" id="SLEntidad" [ngClass]="FormValida.entidad == true ? 'form-control border border-danger' : 'form-control'" [(ngModel)]="CBOentidad" (change)="OnchangeEntidad()">
+                                <option value="">Seleccionar Entidad</option>
+                                <option value="{{listEntidad.id}}" *ngFor="let listEntidad of listEntidades; let j=index" >{{listEntidad.descripcion}}</option>
+                            </select>                             -->
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="row">
+                    <div  class="col-xl-12 col-md-12 col-sm-12">
+                        <div class="form-group  mx-sm-2">
+                            <input type="text" class="form-control border" id="InDisplayEntidad" [(ngModel)]="DisplayEntidad" placeholder="Entidad:" disabled>
+                        </div>
+                    </div>                   
+                </div> -->
+                <div class="row">
+                    <div  class="col-xl-6 col-md-12 col-sm-12">
+                        <div class="form-group  mx-sm-2">
+                            <label for="inputPass" class="sr-only">Genero</label>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="rdsexo" id="inlineRadio1" value="1" (change)="onItemChangeRdGenero($event)">
+                                <label [ngClass]="FormValida.genero == true ? 'form-check-label border border-danger rounded pl-2 pr-2' : 'form-check-label'" for="inlineRadio1">Masculino</label>
+                              </div>
+                              <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="rdsexo" id="inlineRadio2" value="0" (change)="onItemChangeRdGenero($event)">
+                                <label [ngClass]="FormValida.genero == true ? 'form-check-label border border-danger rounded pl-2 pr-2' : 'form-check-label'" for="inlineRadio2">Femenino</label>
+                              </div>                              
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-md-12 col-sm-12  ">
+                        <div class="form-group  mx-sm-2">
+                            <label for="inputEstadoCivil" class="sr-only">Estado Civil</label>
+                            <select name="nmEstadoCivil" id="inputEstadoCivil" [ngClass]="FormValida.estadocivil == true ? 'form-control border border-danger' : 'form-control'" [(ngModel)]="CBOestadocivil">
+                                <option value="">Seleccionar Estado civil</option>
+                                <option value="{{listEstadCv.id}}" *ngFor="let listEstadCv of listEstadoCivil; let j=index" >{{listEstadCv.descripcion}}</option>
+                            </select>                            
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div  class="col-xl-6 col-md-12 col-sm-12">
+                        <div class="form-group  mx-sm-2">
+                            <label for="txtfecha_nace" class="sr-only">Fecha Nacimiento</label>
+                            <input type="text" 
+                            id="txtfecha_nace"                            
+                            autocomplete="off"
+                            #datepickerYMD="bsDatepicker"
+                            bsDatepicker        
+                            [bsConfig]="dataPickerConfig" [ngClass]="FormValida.fnacimiento == true ? 'form-control border border-danger' : 'form-control'"  [(ngModel)]="txtfechanace" placeholder="Fecha Nacimiento">
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-md-12 col-sm-12  ">
+                        <div class="form-group  mx-sm-2">
+                            <label for="inputDireccion" class="sr-only">Dirección</label>
+                            <textarea [ngClass]="FormValida.direccion == true ? 'form-control border border-danger' : 'form-control'" id="inputDireccion" [(ngModel)]="txtdireccion" rows="1" placeholder="Dirección"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div  class="col-xl-6 col-md-12 col-sm-12">
+                        <div class="form-group  mx-sm-2">
+                            <label for="inpuTele" class="sr-only">Teléfono:</label>
+                            <input type="text" [ngClass]="FormValida.telefono == true ? 'form-control border border-danger' : 'form-control'" id="inpuTele" [(ngModel)]="txttelefono" placeholder="Teléfono">
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-md-12 col-sm-12  ">
+                        <div class="form-group  mx-sm-2">
+                            <label for="inputDBCelular" class="sr-only">Celular</label>
+                            <input type="text" [ngClass]="FormValida.celular == true ? 'form-control border border-danger' : 'form-control'" id="inputDBCelular" [(ngModel)]="txtcelular" placeholder="Celular">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div  class="col-xl-6 col-md-12 col-sm-12">
+                        <div class="form-group  mx-sm-2">
+                            <label for="inputCorreo" class="sr-only">Correo:</label>
+                            <input type="text" [ngClass]="FormValida.correo == true ? 'form-control border border-danger' : 'form-control'" id="inputCorreo" [(ngModel)]="txtcorreo" placeholder="Correo">
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-md-12 col-sm-12  ">
+                        <div class="form-group  mx-sm-2">
+                            <label for="inputCargo" class="sr-only">Cargo</label>
+                            <select name="nmCargo" id="inputCargo" [ngClass]="FormValida.cargo == true ? 'form-control border border-danger' : 'form-control'" [(ngModel)]="cbocargo">
+                                <option value="">Seleccionar Cargo</option>
+                                <option value="{{listCargo.id}}" *ngFor="let listCargo of listCargos; let j=index" >{{listCargo.descripcion}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div  class="col-xl-6 col-md-12 col-sm-12">
+                        <div class="form-group  mx-sm-2">
+                            <label for="inputNivelAcademico" class="sr-only">Nivel Academico:</label>
+                            <select name="nmNivelAcademico" id="inputNivelAcademico" [ngClass]="FormValida.nivelacad == true ? 'form-control border border-danger' : 'form-control'" [(ngModel)]="cbonivel_academico">
+                                <option value="">Seleccionar Nivel Académico</option>
+                                <option value="{{listNivelAcad.id}}" *ngFor="let listNivelAcad of listNivelAcademico; let j=index" >{{listNivelAcad.descripcion}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-md-12 col-sm-12">
+                        <div class="form-group  mx-sm-2">
+                            <label for="inputExpEspecifica" class="sr-only">Experiencia Específica</label>
+                            <select name="nmExpEspecifica" id="inputExpEspecifica" [ngClass]="FormValida.experiencia == true ? 'form-control border border-danger' : 'form-control'" [(ngModel)]="cboexperiencia">
+                                <option value="">Seleccionar Experiencia Específica</option>
+                                <option value="{{listEspecificacion.id}}" *ngFor="let listEspecificacion of listEspecificaciones; let j=index" >{{listEspecificacion.descripcion}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div  class="col-xl-6 col-md-12 col-sm-12">
+                        <div class="form-group  mx-sm-2">
+                            <label for="inputLenguaExtranjera" class="sr-only">Lengua Extranjera</label>
+                            <select name="nmLenguaExtranjera" id="inputLenguaExtranjera" [ngClass]="FormValida.lenguaEx == true ? 'form-control border border-danger' : 'form-control'" [(ngModel)]="cbolengua_extranjera">
+                                <option value="">Seleccionar Lengua Extranjera</option>
+                                <option value="{{listLenguaExtranj.id}}" *ngFor="let listLenguaExtranj of listLenguaExtranjera; let j=index" >{{listLenguaExtranj.descripcion}}</option>
+                            </select>
+                            <small id="emailHelp" class="form-text text-muted mx-sm-3">Añade Lengua Extranjera.</small>
+                        </div>
+                    </div>                    
+                    <div  class="col-xl-6 col-md-12 col-sm-12">
+                        <button type="button"  class="btn btn-info" (click)="AddLenguaExtranjera()"> Añadir</button>
+                    </div>                    
+                </div>
+                <div class="row">
+                    <div  class="col-xl-12 col-md-12 col-sm-12 p-3 bg-info" [ngStyle]="{ display : (listAddLengua.length==0)? 'none' : 'block' }">
+                        <ul class="list-group">
+                            <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let Lengua of listAddLengua; let j=index" >
+                              {{Lengua.descripcion}}
+                              <span class="badge badge-danger badge-pill" (click)="RemoveLenguaExtranjera(j)">X</span>
+                            </li>
+                            
+                          </ul>
+                    </div>                    
+                </div>
+            
+        </div>
+    </div>
+    <div class="tab-pane container fade" id="adicionales">
+        <div class="container">
+            
+                <div class="row">
+                    <div  class="col-xl-6 col-md-12 col-sm-12">
+                        <div class="form-group  mx-sm-2">
+                            <label for="icboEspecificacion" class="sr-only">Experiencia General</label>
+                            <select name="nmEspecificacion" id="icboEspecificacion" [(ngModel)]="CBOExpGeneral" [ngClass]="FormValida2.Experiencia == true ? 'form-control border border-danger' : 'form-control'" >
+                                <option value="" selected>Seleccionar Experiencia General</option>                                
+                                <option value="{{listEspecificacion.id}}" *ngFor="let listEspecificacion of listEspecificaciones; let j=index" >{{listEspecificacion.descripcion}}</option>                                
+                            </select>    
+                            
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-md-12 col-sm-12  ">
+                        <div class="form-group  mx-sm-2">
+                            <label for="icboEPS" class="sr-only">EPS</label>
+                            <select name="nmEPS" id="icboEPS" [(ngModel)]="CBOEPS" [ngClass]="FormValida2.EPS == true ? 'form-control border border-danger' : 'form-control'" >
+                                <option value="">Seleccionar EPS</option>
+                                <option value="{{listEps.id}}" *ngFor="let listEps of listEpses; let j=index" >{{listEps.descripcion}}</option>                                
+                            </select>                            
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div  class="col-xl-6 col-md-12 col-sm-12">
+                        <div class="form-group  mx-sm-2">
+                            <label for="icboExpOpEquipo" class="sr-only">Experiencia en Operaciones de Equipos</label>
+                            <select name="nmExpOpEquipo" id="icboExpOpEquipo" disabled [(ngModel)]="CBOExpOperationE" [ngClass]="FormValida2.operaciones == true ? 'form-control border border-danger' : 'form-control'" >
+                                <option value="" selected>Seleccionar Operaciones de Equipos</option>                                
+                                <option value="{{listEspecificacion.id}}" *ngFor="let listEspecificacion of listEspecificaciones; let j=index" >{{listEspecificacion.descripcion}}</option>                                
+                            </select>    
+                            
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-md-12 col-sm-12  ">
+                        <div class="form-group  mx-sm-2">
+                            <label for="icboFondoPension" class="sr-only">Fondo de Pensión</label>
+                            <select name="nmFondoPension" id="icboFondoPension" [(ngModel)]="CBOFpension" [ngClass]="FormValida2.Pension == true ? 'form-control border border-danger' : 'form-control'" >
+                                <option value="">Seleccionar Pensión</option>
+                                <option value="{{listFondoPension.id}}" *ngFor="let listFondoPension of listFondoPensiones; let j=index" >{{listFondoPension.descripcion}}</option>                                
+                            </select>                            
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div  class="col-xl-6 col-md-12 col-sm-12">
+                        <div class="form-group  mx-sm-2">
+                            <label for="icboAspiracion" class="sr-only">Aspiración Salarial (Rango)</label>
+                            <select name="nmAspriracion" id="icboAspiracion" [(ngModel)]="CBORsalario" [ngClass]="FormValida2.Rsalarial == true ? 'form-control border border-danger' : 'form-control'" >
+                                <option value="">Seleccionar Aspiración</option>
+                                <option value="{{listAspiracionSalario.id}}" *ngFor="let listAspiracionSalario of listAspiracionSalarial; let j=index" >{{listAspiracionSalario.descripcion}}</option>                                
+                            </select> 
+                            
+                            
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-md-12 col-sm-12  ">
+                        <div class="form-group  mx-sm-2">
+                            <label for="icboFondoCaja" class="sr-only">Fondo de Caja</label>
+                            <select name="nmFondoCaja" id="icboFondoCaja" [(ngModel)]="CBOFcaja" [ngClass]="FormValida2.Caja == true ? 'form-control border border-danger' : 'form-control'" >
+                                <option value="">Seleccionar Caja</option>
+                                <option value="{{listFondoCaj.id}}" *ngFor="let listFondoCaj of listFondoCaja; let j=index" >{{listFondoCaj.descripcion}}</option>                                
+                            </select>                            
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div  class="col-xl-6 col-md-12 col-sm-12">
+                        <div class="form-group  mx-sm-2">
+                            <label for="inputSalarioExp" class="sr-only">Aspiración Salarial"</label>
+                            <input type="text" id="inputSalarioExp"  [(ngModel)]="txtSalarioEsp"  [ngClass]="FormValida2.SalarioE == true ? 'form-control border-danger border ' : 'form-control'" currencyMask [options]="{ prefix: '$ ', thousands: ',', decimal: '.', align: 'left' }" placeholder="Aspiración salarial">                                                       
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-md-12 col-sm-12  ">
+                        <div class="form-group  mx-sm-2">
+                            <label for="icboCesantias" class="sr-only">Fondo Cesantías</label>
+                            <select name="nmCesantias" id="icboCesantias" [(ngModel)]="CBOFcesantias" [ngClass]="FormValida2.Cesantias == true ? 'form-control border border-danger' : 'form-control'" >
+                                <option value="">Seleccionar Cesantías</option>
+                                <option value="{{listFondoCesantia.id}}" *ngFor="let listFondoCesantia of listFondoCesantias; let j=index" >{{listFondoCesantia.descripcion}}</option>                                
+                            </select>                            
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div  class="col-xl-6 col-md-12 col-sm-12">
+                        <div class="form-group  mx-sm-2">
+                            <label for="icboReclutamiento" class="sr-only">Fuente de Reclutamiento</label>
+                            <select name="nmReclutamiento" id="icboReclutamiento" [(ngModel)]="CBOFreclutamiento" [ngClass]="FormValida2.Reclutamiento == true ? 'form-control border border-danger' : 'form-control'" >
+                                <option value="">Seleccionar Reclutamiento</option>
+                                <option value="{{listFuenteReclutamiento.id}}" *ngFor="let listFuenteReclutamiento of listFuenteReclutamientos; let j=index" >{{listFuenteReclutamiento.descripcion}}</option>                                
+                            </select>                            
+                            
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-md-12 col-sm-12  ">
+                        <div class="form-check form-check-inline ml-3 mr-4">
+                            <input class="form-check-input" type="checkbox" id="chkPartAnterior" value="PA" (change)="chkParticipaAnterior = !chkParticipaAnterior">
+                            <label class="form-check-label" for="chkPartAnterior">Participacion Anterior</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="chkRunt" value="R" (change)="chkRunt = !chkRunt">
+                            <label class="form-check-label" for="chkRunt">Runt</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div  class="col-xl-6 col-md-12 col-sm-12">
+                        <div class="form-group  mx-sm-2">
+                            <label for="inputTarjetaProf" class="sr-only">Tarjeta Profesional</label>
+                            <input type="text" id="inputTarjetaProf" [(ngModel)]="TxtTProfesional" [ngClass]="FormValida2.Tprofesional == true ? 'form-control border border-danger' : 'form-control'" placeholder="Tarjeta Profesional">                            
+                        </div>
+                        
+                    </div>
+                    <div class="col-xl-6 col-md-12 col-sm-12  ">
+                        <div class="form-check form-check-inline ml-3 mr-4">
+                            <input class="form-check-input" type="checkbox" id="chkviajar" value="DV" (change)="chkDisponibleViaja = !chkDisponibleViaja">
+                            <label class="form-check-label" for="chkviajar">Disponibilidad para Viajar</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="chkHoja" value="HV" (change)="chkHojaVida = !chkHojaVida">
+                            <label class="form-check-label" for="chkHoja">Hoja de Vida</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div  class="col-xl-6 col-md-12 col-sm-12">
+                        <div class="form-group  mx-sm-2">
+                            <label for="inputPass" class="sr-only">Entidad</label>
+                            <select name="nmSLEntidad" id="SLEntidad" [ngClass]="FormValida.entidad == true ? 'form-control border border-danger' : 'form-control'" [(ngModel)]="CBOentidad" (change)="OnchangeEntidad()">
+                                <option value="">Seleccionar Entidad</option>
+                                <option value="{{listEntidad.id}}" *ngFor="let listEntidad of listEntidades; let j=index" >{{listEntidad.descripcion}}</option>
+                            </select> 
+                        </div>
+                        
+                    </div>
+                    <div class="col-xl-6 col-md-12 col-sm-12  ">
+                        
+                    </div>
+                </div>
+                <div class="row">
+                    <div  class="col-xl-12 col-md-12 col-sm-12">
+                        <div class="form-group  mx-sm-2">
+                            <input type="text" class="form-control border" id="InDisplayEntidad" [(ngModel)]="DisplayEntidad" placeholder="Entidad:" disabled>
+                        </div>
+                    </div>                   
+                </div>
+                <div class="row">
+                    
+                    <fieldset class="scheduler-border style-fieldset">
+                        <legend class="col-form-label col-sm-6 scheduler-border">Licencia de Conducción</legend>
+                        <div class="control-group">
+                            <div class="row">
+                                <div  class="col-xl-6 col-md-12 col-sm-12">
+                                    <div class="form-group  mx-sm-2">
+                                        <label for="inputNum" class="sr-only">N°</label>
+                                        <input type="text" id="inputNum" [(ngModel)]="TxtNconduccion" [ngClass]="FormValida2.Lconduccion == true ? 'form-control border border-danger' : 'form-control'" placeholder="N°">                            
+                                    </div>
+                                    
+                                </div>
+                                <div class="col-xl-6 col-md-12 col-sm-12  ">
+                                    <div class="form-group  mx-sm-2">
+                                        <label for="radiopublica" class="sr-only">Tipo</label>
+                                          <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="rdlicencia" id="radiopublica" value="1" (change)="onItemChangeRdLicencia($event)"/>
+                                            <label [ngClass]="FormValida2.tipolic == true ? 'form-check-label border border-danger rounded pl-2 pr-2' : 'form-check-label'" for="radiopublica">Publica</label>
+                                          </div>
+                                          <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="rdlicencia" id="radioprivada" value="0" (change)="onItemChangeRdLicencia($event)"/>
+                                            <label [ngClass]="FormValida2.tipolic == true ? 'form-check-label border border-danger rounded pl-2 pr-2' : 'form-check-label'" for="radioprivada">Privada</label>
+                                          </div>                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div  class="col-xl-6 col-md-12 col-sm-12">
+                                    <div class="form-group  mx-sm-2">
+                                        <label for="txtfecha_venc" class="sr-only">Fecha Vencimiento</label>
+                                        <input type="text" 
+                                            id="txtfecha_venc"                            
+                                            autocomplete="off"
+                                            
+                                            #datepickerYMD="bsDatepicker"
+                                            bsDatepicker        
+                                            [bsConfig]="dataPickerConfig" [ngClass]="FormValida2.fvence == true ? 'form-control border border-danger' : 'form-control'" [(ngModel)]="txtfechavence" placeholder="Fecha Vencimiento">
+                                    </div>
+                                    
+                                </div>
+                                <div class="col-xl-6 col-md-12 col-sm-12  ">
+                                    <div class="form-group  mx-sm-2">
+                                        <div class="input-group mb-2 mr-sm-2">
+                                            <label for="inputPass" class="sr-only">Categoría</label>                                       
+                                            <select name="nmCategoria" id="icboCategoria"  [(ngModel)]="CBOCategoria" [ngClass]="FormValida2.categoria == true ? 'form-control border border-danger' : 'form-control'" >
+                                                <option value="0">Seleccionar Categoría</option>
+                                                <option value="{{listCategoria.id}}" *ngFor="let listCategoria of listCategorias; let j=index" >{{listCategoria.descripcion}}</option>                                
+                                            </select> 
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text"><a href="javascript:void(0)" (click)="AddCategorias()">Adicionar Categoría</a> </div>
+                                              </div>           
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row" [ngStyle]="{ display : (listAddCategorias.length==0)? 'none' : 'block' }">
+                                <div class="col-xl-12 col-md-12 col-sm-12">
+                                    <div class="table-responsive-md bg-light" style="border: 2px solid #17a2b8;border-radius: 4px;">
+                                        <table class="table" style="margin-bottom: 0 !important;">
+                                            <tbody>
+                                                <tr>
+                                                    <th>Id</th>
+                                                    <th>Categoria</th>
+                                                    <th>Fecha Vencimiento</th>
+                                                </tr>
+                                            </tbody>
+                                            <tr  *ngFor="let Addcategoria of listAddCategorias; let i = index;">
+                                                <td>{{Addcategoria.IdCategoria}}</td>
+                                                <td>{{Addcategoria.NomCategoria}}</td>
+                                                <td>{{Addcategoria.FechaVence}}</td>
+                                                
+                                                <span class="badge badge-danger badge-pill mt-3" (click)="RemoveCategoria(i)">X</span>
+                                            </tr>
+                                        </table>
+                                    </div>  
+                                </div>
+                            </div>
+                           
+                        </div>
+                    </fieldset>
+                        
+                </div>
+
+                <div class="row">
+                    
+                    <fieldset class="scheduler-border style-fieldset">
+                        <legend class="col-form-label col-sm-6 scheduler-border"></legend>
+                        <div class="control-group">
+                            
+                            <div class="row">
+                                <div  class="col-xl-6 col-md-12 col-sm-12">
+                                    <div class="form-group  mx-sm-2">
+                                        <label for="inputUser" class="sr-only">Color de Piel</label>
+                                        <select name="nmColorPiel" id="icboColorPiel" [(ngModel)]="CBOCpiel" [ngClass]="FormValida2.Cpiel == true ? 'form-control border border-danger' : 'form-control'" >
+                                            <option value="">Seleccionar Color de Piel</option>
+                                            <option value="{{listColorPiel.id}}" *ngFor="let listColorPiel of listColodePiel; let j=index" >{{listColorPiel.descripcion}}</option>                                
+                                        </select> 
+                                    </div>
+                                    
+                                </div>
+                                <div class="col-xl-6 col-md-12 col-sm-12  ">
+                                    <div class="form-group  mx-sm-2">
+                                        <label for="inputPass" class="sr-only">G. Sanguíneo</label>
+                                        <div class="form-inline">
+                                            
+                                        <select name="nmGSanguineo" id="icboGSanguineo" [(ngModel)]="CBOGsanguineo"  [ngClass]="FormValida2.Gsanguineo == true ? 'form-control border border-danger' : 'form-control'" >
+                                            <option value="">Seleccionar G. Sanguíneo</option>
+                                            <option value="{{listGSanguineo.id}}" *ngFor="let listGSanguineo of listGrupoSanguineo; let j=index" >{{listGSanguineo.descripcion}}</option>                                
+                                        </select>            
+                                                                                        
+                                            <div class="form-check  ml-3">
+                                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="rdpositivo" value="1" (change)="onItemChangeRdTipoSangre($event)">
+                                                <label class="form-check-label" [ngClass]="FormValida2.tiposangr == true ? 'form-check-label border border-danger rounded pl-2 pr-2' : 'form-check-label'" for="rdpositivo">+</label>
+                                            </div>
+                                            <div class="form-check ml-3">
+                                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="rdnegativo" value="0" (change)="onItemChangeRdTipoSangre($event)">
+                                                <label class="form-check-label" [ngClass]="FormValida2.tiposangr == true ? 'form-check-label border border-danger rounded pl-2 pr-2' : 'form-check-label'" for="rdnegativo">-</label>
+                                            </div> 
+                                        </div> 
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div  class="col-xl-6 col-md-12 col-sm-12">
+                                    <div class="row">
+                                        <div  class="col-xl-6 col-md-12 col-sm-12">
+                                            <div class="form-group  mx-sm-2">
+                                                <label for="inputPeso" class="sr-only">Peso</label>
+                                                <input type="text" [ngClass]="FormValida2.peso == true ? 'form-control border border-danger' : 'form-control'" id="inputPeso" [(ngModel)]="txtpeso" placeholder="Peso">
+                                            </div>
+                                        </div>
+                                        <div  class="col-xl-6 col-md-12 col-sm-12">
+                                            <div class="form-group  mx-sm-2">
+                                                <label for="inputAltura" class="sr-only">Altura</label>
+                                                <input type="text" [ngClass]="FormValida2.altura == true ? 'form-control border border-danger' : 'form-control'" id="inputAltura" [(ngModel)]="txtaltura" placeholder="Altura">
+                                            </div>
+                                        </div>                                    
+                                    </div>
+                                </div>
+                                <div class="col-xl-6 col-md-12 col-sm-12  ">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                        
+                </div>
+            
+        </div>
+    </div>
+    <div class="tab-pane container fade" id="files">
+        <div class="container">
+            <div class="row">
+                <div class="input-group is-invalid">
+                    <div class="custom-file">
+                      <input type="file" class="custom-file-input" id="validatedInputGroupCustomFile" (change)="handleFileInputArchivos($event)">
+                      <label class="custom-file-label" for="validatedInputGroupCustomFile">{{FileSelected}}</label>
+                    </div>
+                    <div class="input-group-append">
+                       <button class="btn btn-warning" type="button" >Añadir</button>
+                    </div>
+                </div>
+            </div> 
+            <div class="row" style="position:relative;">
+                <span class="badge badge-danger badge-pill icondeletefile" [ngStyle]="{'display': ImageFileSelected !== 'sinSeleccionar.png' ? 'block' : 'none'}" (click)="RemoveFileUpload()">X</span>
+                <img src="./assets/{{ImageFileSelected}}" alt="" style="margin: 0 auto;">
+            </div>
+          
+            
+        </div>
+    </div>
+    <div class="tab-pane container fade" id="estudios">
+        <div class="container">
+            
+                <div class="row">
+                    <div  class="col-xl-6 col-md-12 col-sm-12">
+                        <div class="form-group  mx-sm-2">
+                            <label for="icboInstitucion" class="sr-only">Institución</label>
+                            <select name="nmInstitucion" id="icboInstitucion" [(ngModel)]="CBOinstitucional" [ngClass]="FormValida3.Institucion == true ? 'form-control border border-danger' : 'form-control'" >
+                                <option value="">Seleccionar Institución</option>
+                                <option value="{{listInstituc.id}}" *ngFor="let listInstituc of listInstitucion; let j=index" >{{listInstituc.descripcion}}</option>                                
+                            </select> 
+                        </div>
+                        
+                    </div>
+                    <div class="col-xl-6 col-md-12 col-sm-12">
+                        <div class="form-group  mx-sm-2">
+                            <label for="icboTitulo" class="sr-only">Título</label>
+                            <select name="nmTitulo" id="icboTitulo" [(ngModel)]="CBOTitulo" [ngClass]="FormValida3.Titulo == true ? 'form-control border border-danger' : 'form-control'" >
+                                <option value="">Seleccionar Título</option>
+                                <option value="{{listTit.id}}" *ngFor="let listTit of listTitulo; let j=index" >{{listTit.descripcion}}</option>                                
+                            </select>                                                          
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div  class="col-xl-6 col-md-12 col-sm-12">
+                        <div class="row">
+                            <div  class="col-xl-6 col-md-12 col-sm-12">
+                                <div class="form-group  mx-sm-2">
+                                        <label for="txtfecha_desde" class="sr-only">Desde</label>
+                                        <input type="text" 
+                                            id="txtfecha_desde"                            
+                                            autocomplete="off"
+                                            #datepickerYMD="bsDatepicker"
+                                            bsDatepicker        
+                                            [bsConfig]="dataPickerConfig" 
+                                            [ngClass]="FormValida3.Desde == true ? 'form-control border border-danger' : 'form-control'" 
+                                            #bsDatePickerEstdDesde
+                                            (blur)="txtfechadesde = bsDatePickerEstdDesde.value"
+                                            [(ngModel)]="txtfechadesde" placeholder="Desde">
+                                </div>
+                            </div>
+                            <div  class="col-xl-6 col-md-12 col-sm-12">
+                                <div class="form-group  mx-sm-2">
+                                        <label for="txtfecha_hasta" class="sr-only">Hasta</label>
+                                        <input type="text" 
+                                            id="txtfecha_hasta"                            
+                                            autocomplete="off"
+                                            #datepickerYMD="bsDatepicker"
+                                            bsDatepicker        
+                                            [bsConfig]="dataPickerConfig" 
+                                            [ngClass]="FormValida3.Hasta == true ? 'form-control border border-danger' : 'form-control'"  
+                                            #bsDatePickerEstdHasta
+                                            (blur)="txtfechahasta = bsDatePickerEstdHasta.value"
+                                            [(ngModel)]="txtfechahasta" 
+                                            placeholder="Hasta">
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="col-xl-6 col-md-12 col-sm-12  ">
+                        <div class="form-group  mx-sm-2">
+                            <label for="icboEstado" class="sr-only">Estado</label>
+                            <select name="nmEstado" id="icboEstado" [(ngModel)]="CBOestado" [ngClass]="FormValida3.Estado == true ? 'form-control border border-danger' : 'form-control'" >
+                                <option value="-1">Seleccionar Estado</option>
+                                <option value="0">Culminado</option>
+                                <option value="1">En curso</option>
+                                <option value="2">Abandonado</option>
+                                <option value="3">Aplazado</option>
+                            </select>                                                          
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div  class="col-xl-6 col-md-12 col-sm-12">
+                        <div class="form-group  mx-sm-2">
+                            <label for="icboTipo" class="sr-only">Tipo</label>
+                            <select name="nmTipo" id="icboTipo" [(ngModel)]="CBOEstudioTipo" [ngClass]="FormValida3.Tipo == true ? 'form-control border border-danger' : 'form-control'" (click)="SelectTipoEstudio()" >
+                                <option value="">Seleccionar Tipo</option>
+                                <option value="0">Pregrado</option>
+                                <option value="1">Especialización</option>
+                                <option value="2">Estudio Complementario</option>
+                                <option value="3">Maestria</option>
+                                <option value="4">Doctorado</option>
+                                
+                            </select> 
+                        </div>
+                        
+                    </div>
+                    <div class="col-xl-6 col-md-12 col-sm-12  ">
+                        <div class="form-group  mx-sm-2">
+                            <label for="icboTipoCurso" class="sr-only">Tipo Curso</label>
+                            <select name="nmTipoCurso" disabled id="icboTipoCurso" [(ngModel)]="CBOTipoCurso" [ngClass]="FormValida3.TipoCurso == true ? 'form-control border border-danger' : 'form-control'" >
+                                <option value="">Seleccionar Tipo Curso</option>
+                                <option value="{{listTCurso.id}}" *ngFor="let listTCurso of listTipoCurso; let j=index" >{{listTCurso.descripcion}}</option>                                
+                            </select>                                                          
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div  class="col-xl-6 col-md-12 col-sm-12">
+                        <div class="form-group  mx-sm-2">
+                            <label for="icboTipoNiveles" class="sr-only">Tipo Nivel</label>
+                            <select name="nmTipoNiveles" disabled id="icboTipoNiveles" [(ngModel)]="CBOTipoNiveles" [ngClass]="FormValida3.Niveles == true ? 'form-control border border-danger' : 'form-control'" >
+                                <option value="1000">Seleccionar Nivel</option>
+                                <option value="">Tecnica Laboral</option>
+                                <option value="1">Formación Técnica Profesional</option>
+                                <option value="2">Tecnológica</option>
+                                <option value="3">Universidad</option>
+                                
+                                
+                            </select> 
+                        </div>
+                        
+                    </div>
+                    <div class="col-xl-6 col-md-12 col-sm-12  ">
+                        <div class="form-group  mx-sm-2">
+                                                                               
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-6 col-md-12 col-sm-12 ml-2 mb-3 ">
+                        <button type="button" class="btn btn-danger" (click)="AddEstudios()">Adicionar</button>
+                    </div>
+                </div> 
+                <div class="row">
+                    <div  class="col-xl-12 col-md-12 col-sm-12 p-4 bg-info" [ngStyle]="{'display':listAddEstudios.length === 0 ? 'none' : 'block' }">
+                       
+                        <div class="table-responsive-md bg-light">
+                            <table class="table" style="margin-bottom: 0 !important;">
+                                <tr  *ngFor="let AddEstudio of listAddEstudios; let i = index;">
+                                    <td>{{AddEstudio.InstitucionText}}</td>
+                                    <td>{{AddEstudio.TituloText}}</td>
+                                    <td>{{AddEstudio.EstadoText}}</td>
+                                    <td>{{AddEstudio.TipoText}}</td>
+                                    <td>{{AddEstudio.TipoCursoText}}</td>
+                                    <span class="badge badge-danger badge-pill mt-3" (click)="RemoveEstudios(i)">X</span>
+                                </tr>
+                            </table>
+                        </div>
+                             
+                    </div>                    
+                </div>
+            
+        </div>
+    </div>
+    <div class="tab-pane container fade" id="referencia">
+        <div class="container">
+            <div class="row">
+                <div  class="col-xl-6 col-md-12 col-sm-12">
+                    <div class="form-group  mx-sm-2">
+                        <label for="inputRNombre" class="sr-only">Nombre</label>
+                        <input type="text" [ngClass]="FormValida4.Nombre == true ? 'form-control border border-danger' : 'form-control'" id="inputRNombre" [(ngModel)]="txtmynombre" placeholder="Nombre">
+                    </div>                    
+                </div>
+                <div  class="col-xl-6 col-md-12 col-sm-12">
+                    <div class="form-group  mx-sm-2">
+                        <label for="inputRCelular" class="sr-only">Celular</label>
+                        <input type="text" [ngClass]="FormValida4.Celular == true ? 'form-control border border-danger' : 'form-control'" id="inputRCelular" [(ngModel)]="txtmycelular" placeholder="Celular">
+                    </div>                    
+                </div>
+            </div>
+            <div class="row">
+                <div  class="col-xl-6 col-md-12 col-sm-12">
+                    <div class="form-group  mx-sm-2">
+                        <label for="inputRTelefono" class="sr-only">Teléfono</label>
+                        <input type="text" [ngClass]="FormValida4.Telefono == true ? 'form-control border border-danger' : 'form-control'" id="inputRTelefono" [(ngModel)]="txtmytelefono" placeholder="Teléfono">
+                    </div>                    
+                </div>
+                <div  class="col-xl-6 col-md-12 col-sm-12">
+                    <div class="form-group  mx-sm-2">
+                        <label for="inputMail" class="sr-only">Correo</label>
+                        <input type="text" [ngClass]="FormValida4.Mail == true ? 'form-control border border-danger' : 'form-control'" id="inputMail" [(ngModel)]="txtmycorreo" placeholder="Mail">
+                    </div>                    
+                </div>
+            </div>
+            <div class="row">
+                <div  class="col-xl-6 col-md-12 col-sm-12 pl-4 pt-2">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="rdTipoRef" id="radioLaboral" value="1" checked (change)="onItemChangeRdTipoRef($event)">
+                        <label [ngClass]="FormValida4.TipoRef == true ? 'form-check-label border border-danger rounded pl-2 pr-2' : 'form-check-label'" for="radioLaboral">Laboral</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="rdTipoRef" id="radioPersonal" checked value="0" (change)="onItemChangeRdTipoRef($event)">
+                        <label [ngClass]="FormValida4.TipoRef == true ? 'form-check-label border border-danger rounded pl-2 pr-2' : 'form-check-label'" for="radioPersonal">Personal</label>
+                    </div>                    
+                </div>
+                <div  class="col-xl-6 col-md-12 col-sm-12">
+                    <div class="form-group  mx-sm-2">
+                        <label for="inputRNotas" class="sr-only">Notas</label>
+                        <textarea  [ngClass]="FormValida4.Notas == true ? 'form-control border border-danger' : 'form-control'" rows="1" id="inputRNotas" [(ngModel)]="txtmynotaRef" autocomplete="false"  placeholder="Notas"></textarea>
+                    </div>                    
+                </div>
+            </div>
+
+            <div class="row ViewTipoLaboral" [ngStyle]="{'display': FormViewReferenciaLaboral ? 'flex': 'none'}">
+                <div  class="col-xl-6 col-md-12 col-sm-12 ">
+                    <div class="form-group  mx-sm-2">
+                        <label for="inputEmpresa" class="sr-only">Empresa</label>
+                        <input type="text" [ngClass]="FormValida4.Empresa == true ? 'form-control border border-danger' : 'form-control'" id="inputEmpresa" [(ngModel)]="txtmyempresa" autocomplete="false" placeholder="Empresa">
+                    </div>                   
+                </div>
+                <div  class="col-xl-6 col-md-12 col-sm-12">
+                    <div class="form-group  mx-sm-2">
+                        <label for="inputRefCargo" class="sr-only">Cargo</label>
+                        <input type="text" [ngClass]="FormValida4.Cargo == true ? 'form-control border border-danger' : 'form-control'" id="inputRefCargo" [(ngModel)]="txtmycargo" autocomplete="false" placeholder="Cargo">
+                    </div>                   
+                </div>
+            </div>
+            <div class="row ViewTipoLaboral" [ngStyle]="{'display': FormViewReferenciaLaboral ? 'flex': 'none'}">
+                <div  class="col-xl-6 col-md-12 col-sm-12 ">
+                    <div class="form-group  mx-sm-2">
+                        <label for="inputTimelabor" class="sr-only">Tiempo Laborado</label>
+                        <input type="text" [ngClass]="FormValida4.TimeLabor == true ? 'form-control border border-danger' : 'form-control'" id="inputTimelabor" [(ngModel)]="txtmyTimeLabor" autocomplete="false" placeholder="Tiempo Laborado">
+                    </div>                   
+                </div>
+                <div  class="col-xl-6 col-md-12 col-sm-12">
+                    <div class="form-group  mx-sm-2">
+                        <label for="inputMotivoRetiro" class="sr-only">Motivo Retiro</label>
+                        <input type="text" [ngClass]="FormValida4.MotRetiro == true ? 'form-control border border-danger' : 'form-control'" id="inputMotivoRetiro" [(ngModel)]="txtmyMotivoRetiro" placeholder="Motivo Retiro">
+                    </div>                   
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xl-6 col-md-12 col-sm-12 mb-3 ml-2 ">
+                    <button type="button" class="btn btn-danger" (click)="AddReferencias()">Adicionar</button>
+                </div>
+            </div> 
+            <div class="row">
+                <div  class="col-xl-12 col-md-12 col-sm-12 p-3 bg-info" [ngStyle]="{'display': listAddReferencia.length !== 0 ? 'block':'none' }">
+                    
+                    <div class="table-responsive-md bg-light">
+                        <table class="table" style="margin-bottom: 0 !important;">
+                          <tr  *ngFor="let AddRefencia of listAddReferencia; let i = index;">
+                              <td>{{AddRefencia.Nombre}}</td>
+                              <td>{{AddRefencia.Celular}}</td>
+                              <td>{{AddRefencia.Telefono}}</td>
+                              <td>{{AddRefencia.Mail}}</td>
+                              <td>{{AddRefencia.Tipo}}</td>
+                              <span class="badge badge-danger badge-pill mt-3" (click)="RemoveReferencia(i)">X</span>                              
+                          </tr>
+                        </table>
+                      </div>
+                    
+                </div>                    
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane container fade" id="cargos">
+        <div class="container">
+            <div class="row">
+                <div  class="col-xl-12 col-md-12 col-sm-12 mx-sm-2">
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <strong>NOTA: </strong> Seleccionar a que otros cargos considera podría aplicar.
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                </div>
+            </div>
+            <div class="row">
+                <div  class="col-xl-6 col-md-12 col-sm-12">
+                    <div class="form-group  mx-sm-2">
+                        <label for="icbocargo" class="sr-only">Cargo</label>
+                        <select name="nmccargo" id="icbocargo" [(ngModel)]="CbolistCargo" [ngClass]="FormValida5.cargos == true ? 'form-control border border-danger' : 'form-control'" >
+                            <option value="">Seleccionar Cargos</option>
+                            <option value="{{listCargo.id}}" *ngFor="let listCargo of listCargos; let j=index" >{{listCargo.descripcion}}</option>                                
+                        </select> 
+                    </div>                    
+                </div>
+                <div class="col-xl-6 col-md-12 col-sm-12 ">
+                    <button type="button" class="btn btn-danger" (click)="AddCargos()">Adicionar</button>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div  class="col-xl-12 col-md-12 col-sm-12 p-3 bg-info" [ngStyle]="{'display': listAddCargos.length !== 0 ? 'block':'none' }">
+                    
+                    <div class="table-responsive-md bg-light">
+                        <table class="table" style="margin-bottom: 0 !important;">
+                          <tr  *ngFor="let AddCarg of listAddCargos; let i = index;">
+                              <td>{{AddCarg.descripcion}}</td>                              
+                              <span class="badge badge-danger badge-pill mt-3" (click)="RemoveCargos(i)">X</span>                              
+                          </tr>
+                        </table>
+                      </div>
+                    
+                </div>                    
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane container fade" id="infofamiliar">
+        <div class="container">
+            <div class="row">
+                <div  class="col-xl-6 col-md-12 col-sm-12">
+                    <div class="form-group  mx-sm-2">
+                        <label for="inputRNombre" class="sr-only">Identificación</label>
+                        <input type="text" [ngClass]="FormValida6.identificacion == true ? 'form-control border border-danger' : 'form-control'" id="inputRNombre" [(ngModel)]="txtifidentificacion" placeholder="Identificación">
+                    </div>                    
+                </div>
+                <div  class="col-xl-6 col-md-12 col-sm-12">
+                    <div class="form-group  mx-sm-2">
+                        <label for="inputRCelular" class="sr-only">Nombre</label>
+                        <input type="text" [ngClass]="FormValida6.nombre == true ? 'form-control border border-danger' : 'form-control'" id="inputRCelular" [(ngModel)]="txtifNombre" placeholder="Nombre">
+                    </div>                    
+                </div>
+            </div>
+            <div class="row">
+                <div  class="col-xl-6 col-md-12 col-sm-12">
+                    <div class="form-group  mx-sm-2">
+                        <label for="inputIFNace" class="sr-only">F. Nacimiento</label>
+                        <input type="text" 
+                            id="inputIFNace"                            
+                            autocomplete="off"
+                            #datepickerYMD="bsDatepicker"
+                            bsDatepicker        
+                            [bsConfig]="dataPickerConfig" [ngClass]="FormValida6.nace == true ? 'form-control border border-danger' : 'form-control'" [(ngModel)]="txtifnace" placeholder="F. Nacimiento">
+                        
+                    </div>                    
+                </div>
+                <div  class="col-xl-6 col-md-12 col-sm-12">
+                    <div class="form-group  mx-sm-2">
+                        <!-- <label for="inputIFParentesco" class="sr-only">Parentesco</label>
+                        <input type="text" [ngClass]="FormValida6.parentesco == true ? 'form-control border border-danger' : 'form-control'" id="inputIFParentesco" [(ngModel)]="txtifparentesco" placeholder="Parentesco"> -->
+
+                        <label for="IFcboTparentesco" class="sr-only">Parentesco</label>
+                        <select name="nmEspecificacion" id="IFcboTparentesco" [(ngModel)]="CBOifparentesco" [ngClass]="FormValida6.parentesco == true ? 'form-control border border-danger' : 'form-control'" >
+                            <option value="" selected>Selecciona un Parentesco</option>                                
+                             <option value="{{listAddParentesco.id}}" *ngFor="let listAddParentesco of listAddParentescos; let j=index" >{{listAddParentesco.descripcion}}</option>  
+                        </select> 
+
+                    </div>                    
+                </div>
+            </div>
+            <div class="row">
+                <div  class="col-xl-6 col-md-12 col-sm-12">
+                    <div class="form-group  mx-sm-2">
+                        <label for="inputIFtelefono" class="sr-only">Teléfono</label>
+                        <input type="text" [ngClass]="FormValida6.telefono == true ? 'form-control border border-danger' : 'form-control'" id="inputIFtelefono" [(ngModel)]="txtIFtelefono" placeholder="Teléfono">
+                    </div>                    
+                </div>
+                <div  class="col-xl-6 col-md-12 col-sm-12">
+                    <div class="form-group  mx-sm-2">
+                  
+                    </div>                    
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-6 col-md-12 col-sm-12 mb-3 ml-2 ">
+                    <button type="button" class="btn btn-danger" (click)="AddInfoFamiliar()">Adicionar</button>
+                </div>
+            </div> 
+            <div class="row">
+                <div  class="col-xl-12 col-md-12 col-sm-12 p-4 bg-info" [ngStyle]="{'display': listAddInfoFamiliar.length !== 0 ? 'block':'none' }">
+                    
+                    <div class="table-responsive-md bg-light">
+                        <table class="table" style="margin-bottom: 0 !important;">
+                          <tr  *ngFor="let AddInfoFamiliar of listAddInfoFamiliar; let i = index;">
+                              <td>{{AddInfoFamiliar.Nit}}</td>
+                              <td>{{AddInfoFamiliar.Nombre}}</td>
+                              <td>{{AddInfoFamiliar.FechaNace}}</td>
+                              <td>{{AddInfoFamiliar.Parentesco}}</td>
+                              <td>{{AddInfoFamiliar.TelResidencia}}</td>
+                              <span class="badge badge-danger badge-pill mt-3" (click)="RemoveFamiliar(i)">X</span>                              
+                          </tr>
+                        </table>
+                      </div>
+                    
+                </div>                    
+            </div>
+        </div>
+    </div>
+
+  </div>
+
+<!-- template modal (m1) -->
+
+
+<ng-template #mymodalTipodoc let-modal modal-dialog modal-lg>
+    <div class="modal-header bg-info">
+      <h4 class="modal-title text-white" id="modal-basic-title">Diligenciar</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div  class="col-xl-6 col-md-12 col-sm-12">
+                <div class="form-group  mx-sm-2">
+                    <label for="inputPass" class="sr-only">Pais Exp.</label>
+                    <select name="" id="" [ngClass]="FormValida.paisexp == true ? 'form-control border border-danger' : 'form-control'" [(ngModel)]="m1cboPaisExp" (change)="ListarDepartamentoExp($event)">
+                        <option value="">Seleccionar País Exp</option>                                
+                        <option value="{{listPais.id}}" *ngFor="let listPais of listPaisesExp; let j=index" >{{listPais.descripcion}}</option>                                
+                    </select>    
+                </div>
+            </div>
+            <div class="col-xl-6 col-md-12 col-sm-12  ">
+                <div class="form-group  mx-sm-2">
+                    <label for="inputPass" class="sr-only">Departamento Exp.</label>
+                    <select name="" id="" [ngClass]="FormValida.departexp == true ? 'form-control border border-danger' : 'form-control'" [(ngModel)]="m1cboDepartExp" (change)="ListarCiudadExp($event)">
+                        <option value="">Seleccionar Departamento exp.</option>
+                        <option value="{{listDeptoExp.id}}" *ngFor="let listDeptoExp of listDeptosExp; let j=index" >{{listDeptoExp.descripcion}}</option>                                
+                    </select>    
+                    
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div  class="col-xl-6 col-md-12 col-sm-12">
+                <div class="form-group  mx-sm-2">
+                    <label for="inputPass" class="sr-only">Ciudad Exp.</label>                     
+                    <select name="" id="" [ngClass]="FormValida.ciudadexp == true ? 'form-control border border-danger' : 'form-control'" [(ngModel)]="m1cboCiudadExp">
+                        <option value="">Seleccionar Ciudad Exp.</option>
+                        <option value="{{listCiudadExp.id}}" *ngFor="let listCiudadExp of listCiudadesExp; let j=index" >{{listCiudadExp.descripcion}}</option>
+                    </select> 
+                </div>
+                
+            </div>
+            <div class="col-xl-6 col-md-12 col-sm-12  ">
+                <div class="form-group  mx-sm-2">
+                    <label for="txtfecha_exp" class="sr-only">Fecha Expedición</label>
+                    <input type="text" 
+                    id="txtfecha_exp"                            
+                    autocomplete="off"
+                    #datepickerYMD="bsDatepicker"
+                    bsDatepicker        
+                    [bsConfig]="dataPickerConfig" [ngClass]="FormValida.fechaExp == true ? 'form-control border border-danger' : 'form-control'" #bsDatePickerExp [(ngModel)]="m1txtfechaExp" (blur)="m1txtfechaExp = bsDatePickerExp.value" placeholder="Fecha Expedición">
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" ngbAutofocus  (click)="modal.close('Save click')">Cerrar</button>
+    </div>
+  </ng-template>
+
+
+
+
+

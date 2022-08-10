@@ -1,0 +1,63 @@
+#myTab{
+    padding-top: 10px;
+    padding-left: 10px;
+}
+.nav-link.active{
+    color: #17a2b8 !important;
+    font-weight: 500;
+}
+.style-fieldset{
+    width: 100%;
+    border-radius: 4px;
+}
+fieldset.scheduler-border {
+    border: 1px groove #ddd !important;
+    padding: 0 1.4em 1.4em 1.4em !important;
+    margin: 0 0 1.5em 0 !important;
+    -webkit-box-shadow:  0px 0px 0px 0px #000;
+            box-shadow:  0px 0px 0px 0px #000;
+}
+
+legend.scheduler-border {
+    font-size: initial !important;
+    font-weight: 500 !important;
+    text-align: left !important;
+}
+.contentEstudio{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+.rowEstudio {
+    width: 100%;
+    border-top: 1px solid;
+    text-align: center;
+    font-size: 14px;
+    border-bottom: 1px solid;
+    border-left: 1px solid;
+}
+.rowEstudio:last-child {
+    border-right: 1px solid;
+}
+.icondeletefile{
+    position: absolute;
+    right: calc(50% - 136px );
+    top: 29px;
+    cursor: pointer;
+}
+
+select {
+    border: 1px solid #17a2b8 ;
+}
+input,textarea {
+    border: 1px solid #ced4da ;
+}
+@media only screen and (max-width : 800px) {
+
+    .sr-only{
+        display: inline-block;
+        position: inherit;
+        width: inherit;
+        height: inherit;
+    }
+}
